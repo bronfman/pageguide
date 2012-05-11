@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/pageguide.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,7 +16,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Pageguide</h1>
+        <h1 class="one">Pageguide</h1>
         <p>An interactive guide for web page element using jQuery and CSS3</p>
         <p class="view"><a href="https://github.com/tracelytics/pageguide">View the Project on GitHub <small>tracelytics/pageguide</small></a></p>
         <ul>
@@ -25,7 +26,7 @@
         </ul>
       </header>
       <section>
-        <h3>Welcome to GitHub Pages.</h3>
+        <h3 class="two">Welcome to GitHub Pages.</h3>
 
 <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
@@ -57,7 +58,16 @@ $ git checkout gh-pages
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
+
+    <ul id="tlyPageGuide" data-tourtitle="Learn how to get the most out of Tracelytics">
+        <li class="tlypageguide_left" data-tourtarget=".one"><div>You are currently on the Overview Page--the birds-eye view of your app performance and tracing usage.  The numbers of hosts and layers you see are across all of your apps.</div></li>
+        <li class="tlypageguide_left" data-tourtarget=".two"><div>Each app's latency and throughput are broken down separately.  Want to dive deeper?  Click "layer summary" to zoom in and break down the data by layer, or click "app traces" to view the requests we've traced in this app.</div></li>
+    </ul>
+
     <script src="javascripts/scale.fix.js"></script>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script src="javascripts/pageguide.js"></script>
+
   </body>
 </html>
