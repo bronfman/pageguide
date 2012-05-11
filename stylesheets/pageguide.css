@@ -37,7 +37,7 @@
   transition: all 0.2s ease-in;
 }
 #tlyPageGuideWrapper .tlypageguide_toggle:before {
-  background: transparent url("/img/tlyguide/tlyguide_icon.png") 0 0 no-repeat;
+  background: transparent url("../img/tlyguide/tlyguide_icon.png") 0 0 no-repeat;
   display: block;
   height: 16px;
   overflow: hidden;
@@ -288,7 +288,7 @@
 }
 #tlyPageGuideWrapper #tlyPageGuideMessages .tlypageguide_back,
 #tlyPageGuideWrapper #tlyPageGuideMessages .tlypageguide_fwd {
-  background: transparent url("/img/tlyguide/tlyguide_arrow.png") 10px 4px no-repeat;
+  background: transparent url("../img/tlyguide/tlyguide_arrow.png") 10px 4px no-repeat;
   display: block;
   height: 30px;
   overflow: hidden;
