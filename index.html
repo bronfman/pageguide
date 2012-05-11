@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Pageguide by tracelytics</title>
 
+    <link rel="stylesheet" href="stylesheets/reset.css">
     <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="stylesheets/pageguide.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -16,52 +18,64 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="one">Pageguide</h1>
-        <p>An interactive guide for web page element using jQuery and CSS3</p>
+        <div class="intro">
+          <a href="http://www.tracelytics.com" title="Tracelytics.com" class="tracelytcs_logo">
+            Tracelytics FTW
+          </a>
+          <h1 class="one">Pageguide</h1>
+          <p>An interactive guide for web page element using jQuery and CSS3</p>
+        </div>
         <p class="view"><a href="https://github.com/tracelytics/pageguide">View the Project on GitHub <small>tracelytics/pageguide</small></a></p>
         <ul>
           <li><a href="https://github.com/tracelytics/pageguide/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/tracelytics/pageguide/tarball/master">Download <strong>TAR Ball</strong></a></li>
           <li><a href="https://github.com/tracelytics/pageguide">View On <strong>GitHub</strong></a></li>
         </ul>
+        <div class="upsell">
+          Full stack application tracing. Watch your entire environment in one place.
+          <a class="start" title="Start Tracing" href="/signup">Start Tracing Now</a>
+        </div>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </header>
       <section>
-        <h3 class="two">Welcome to GitHub Pages.</h3>
+        <span>See PageGuide in action</span>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+        <p>
+          Page Guide is an interactive visual guide to elements on webp apps.
+          <br>
+          Instead of cluttering your interface with static help message, or explanatory text.
+          <br>
+          Add page guide and let your users learn about new features and functions.
+        </p>
+        <p>
+          Its Easy to implement
+        </p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+        <div class="first_ftw">
+            I really want you to see this! Click the PageGuide Button!
+        </div>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+        <div class="second_ftw">
+            This too! Click the PageGuide Button!
+        </div>
 
-<h3>Designer Templates</h3>
+        <pre><code>1. Add a reference to pageguide.js<br>2. Add a reference to pageguide.css<br>3. Add a simple &lt;ul&gt; to the pages you want page guide on<br>4. ?<br>5. Profit!</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+        <span class="more_here">There is more down here, the <a href="https://github.com/tracelytics/pageguide" title="View on Github">pageguide</a> scrolls for you</span>
 
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+        <div class="way_down_here">
+            <a href="https://github.com/tracelytics/pageguide" title="View on Github">
+                <img src="img/octocat.png" width-"174" height="174" />
+                Check it out on Github!
+            </a>
+        </div>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/tracelytics">tracelytics</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
     </div>
 
     <ul id="tlyPageGuide" data-tourtitle="Learn how to get the most out of Tracelytics">
-        <li class="tlypageguide_left" data-tourtarget=".one"><div>You are currently on the Overview Page--the birds-eye view of your app performance and tracing usage.  The numbers of hosts and layers you see are across all of your apps.</div></li>
-        <li class="tlypageguide_left" data-tourtarget=".two"><div>Each app's latency and throughput are broken down separately.  Want to dive deeper?  Click "layer summary" to zoom in and break down the data by layer, or click "app traces" to view the requests we've traced in this app.</div></li>
+        <li class="tlypageguide_left" data-tourtarget=".first_ftw"><div>You are currently on the Overview Page--the birds-eye view of your app performance and tracing usage.  The numbers of hosts and layers you see are across all of your apps.</div></li>
+        <li class="tlypageguide_right" data-tourtarget=".second_ftw"><div>You are currently on the Overview Page--the birds-eye view of your app performance and tracing usage.  The numbers of hosts and layers you see are across all of your apps.</div></li>
+        <li class="tlypageguide_top" data-tourtarget=".way_down_here"><div>Each app's latency and throughput are broken down separately.  Want to dive deeper?  Click "layer summary" to zoom in and break down the data by layer, or click "app traces" to view the requests we've traced in this app.</div></li>
     </ul>
 
     <script src="javascripts/scale.fix.js"></script>
