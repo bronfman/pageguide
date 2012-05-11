@@ -158,7 +158,8 @@ tl.pg.PageGuide.prototype._on_ready = function () {
         var $message = $("#tlyPageGuideMessages");
         if (that.open) {
             that.track_event('PG.close');
-            that.$items.toggle("blind", "fast");
+            that.$items.toggleClass('expanded');
+
             $message.animate({ height: "0" }, 500, function() {
                 $(this).hide();
             });
@@ -169,7 +170,7 @@ tl.pg.PageGuide.prototype._on_ready = function () {
         else {
             that.track_event('PG.open');
             that._on_expand();
-            that.$items.toggle("blind", "fast");
+            that.$items.toggleClass('expanded');
             $('body').addClass('tlypageguide-open');
         }
 
