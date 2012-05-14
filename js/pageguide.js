@@ -23,7 +23,7 @@ tl = window.tl || {};
 tl.pg = tl.pg || {};
 
 tl.pg.default_prefs = { 'auto_show_first': true,
-                        'track_events_cb': tl.track_event };
+                        'track_events_cb': null };
 
 $(function() {
     /* page guide object, for pages that have one */
@@ -52,16 +52,6 @@ $(function() {
     }
 });
 
-tl.pg.isScrolledIntoView = function(elem) {
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
-
-    var elemTop = $(elem).offset().top;
-    var elemBottom = elemTop + $(elem).height();
-
-    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom - 100));
-};
-
 tl.pg.PageGuide = function (pg_elem, preferences) {
     this.preferences = $.extend(tl.pg.default_prefs, preferences || {});
     this.$base = pg_elem;
@@ -80,6 +70,17 @@ tl.pg.PageGuide = function (pg_elem, preferences) {
         that._on_ready();
     });
 };
+
+tl.pg.isScrolledIntoView = function(elem) {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+
+    var elemTop = $(elem).offset().top;
+    var elemBottom = elemTop + $(elem).height();
+
+    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom - 100));
+};
+
 
 /* to be executed on pg expand */
 tl.pg.PageGuide.prototype._on_expand = function () {
