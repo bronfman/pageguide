@@ -167,7 +167,7 @@
 }
 #tlyPageGuideWrapper #tlyPageGuide li.tlypageguide-active.tlypageguide_right:after,
 #tlyPageGuideWrapper #tlyPageGuide li.tlypageguide-active.tlypageguide_left:after,
-#tlyPageGuideWrapper #tlyPageGuide li.tlypageguide-active.tlypageguide_op:after {
+#tlyPageGuideWrapper #tlyPageGuide li.tlypageguide-active.tlypageguide_top:after {
   border-top: 15px solid rgba(247, 0, 119, 0.95);
 }
 #tlyPageGuideWrapper #tlyPageGuide li.tlypageguide_bottom:after {

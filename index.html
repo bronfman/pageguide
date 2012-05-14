@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="stylesheets/pageguide.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -32,36 +33,42 @@
           <li><a href="https://github.com/tracelytics/pageguide">View On <strong>GitHub</strong></a></li>
         </ul>
         <div class="upsell">
-          Full stack application tracing. Watch your entire environment in one place.
-          <a class="start" title="Start Tracing" href="/signup">Start Tracing Now</a>
+          Full stack application tracing.<br>Watch your entire environment in one place.
+          <a class="start" title="Start Tracing" href="/signup">start tracing now!</a>
         </div>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </header>
       <section>
-        <span>See PageGuide in action</span>
-
+        <div class="big_arrow_right">
+          <span>See PageGuide in action</span>
+        </div>
         <p>
           Page Guide is an interactive visual guide to elements on webp apps.
           <br>
-          Instead of cluttering your interface with static help message, or explanatory text.
+          Instead of cluttering your interface with static help message, or explanatory text,
           <br>
-          Add page guide and let your users learn about new features and functions.
+          add page guide and let your users learn about new features and functions.
         </p>
+
+        <div class="first_ftw">
+            You need some more information about this box.<br>Click the page guide button!
+        </div>
+
+        <div class="second_ftw">
+            This too! Click the page guide button!
+        </div>
+
         <p>
           Its Easy to implement
         </p>
 
-        <div class="first_ftw">
-            I really want you to see this! Click the PageGuide Button!
+        <pre><code>1. Add references to pageguide.js & pageguide.css<br>2. Add a simple &lt;ul&gt; to pages you want page guide to appear on<br>3. ?<br>4. Profit!</code></pre>
+
+        <div class="more_here">
+          <span>
+            There is more down here, the page guide scrolls for you
+          </span>
         </div>
-
-        <div class="second_ftw">
-            This too! Click the PageGuide Button!
-        </div>
-
-        <pre><code>1. Add a reference to pageguide.js<br>2. Add a reference to pageguide.css<br>3. Add a simple &lt;ul&gt; to the pages you want page guide on<br>4. ?<br>5. Profit!</code></pre>
-
-        <span class="more_here">There is more down here, the <a href="https://github.com/tracelytics/pageguide" title="View on Github">pageguide</a> scrolls for you</span>
 
         <div class="way_down_here">
             <a href="https://github.com/tracelytics/pageguide" title="View on Github">
@@ -72,10 +79,30 @@
       </section>
     </div>
 
-    <ul id="tlyPageGuide" data-tourtitle="Learn how to get the most out of Tracelytics">
-        <li class="tlypageguide_left" data-tourtarget=".first_ftw"><div>You are currently on the Overview Page--the birds-eye view of your app performance and tracing usage.  The numbers of hosts and layers you see are across all of your apps.</div></li>
-        <li class="tlypageguide_right" data-tourtarget=".second_ftw"><div>You are currently on the Overview Page--the birds-eye view of your app performance and tracing usage.  The numbers of hosts and layers you see are across all of your apps.</div></li>
-        <li class="tlypageguide_top" data-tourtarget=".way_down_here"><div>Each app's latency and throughput are broken down separately.  Want to dive deeper?  Click "layer summary" to zoom in and break down the data by layer, or click "app traces" to view the requests we've traced in this app.</div></li>
+    <ul id="tlyPageGuide" data-tourtitle="The best way to highlight functionality">
+        <li class="tlypageguide_left" data-tourtarget=".first_ftw">
+          <div>
+            The page guide attaches css pseudo elements to whatever features you define on your pages.
+            The numbered arrows can be placed on top, bottom, left or right of whatever you are trying to highlight
+          </div>
+        </li>
+        <li class="tlypageguide_left" data-tourtarget=".second_ftw">
+          <div>
+            Change the style of the page guide as much as you want. We include both css and LESS css in the repo. We even attach a class
+            to the body of the page when the guide is open.
+          </div>
+        </li>
+        <li class="tlypageguide_left" data-tourtarget=".more_here">
+          <div>
+            The page guide also scrolls for you, so just use the forward and back arrows on the left to move been elements
+          </div>
+        </li>
+        <li class="tlypageguide_top" data-tourtarget=".way_down_here">
+          <div>
+            We include custom tracking for all the actions of the page guide. Simply define your tracking code from mixpanel, kissmetrics, hubspot, etc.
+            and find out what people are interested in.
+          </div>
+        </li>
     </ul>
 
     <script src="javascripts/scale.fix.js"></script>
