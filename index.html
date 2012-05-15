@@ -20,7 +20,7 @@
     <div class="wrapper">
       <header>
         <div class="intro">
-          <a href="http://www.tracelytics.com" title="Tracelytics.com" class="tracelytcs_logo">
+          <a href="http://www.tracelytics.com?utm_campaign=pageguide&utm_source=pageguide" title="Tracelytics.com" class="tracelytcs_logo">
             Tracelytics FTW
           </a>
           <h1 class="one">pageguide.js</h1>
@@ -35,7 +35,7 @@
         <div class="upsell">
           <strong>What's Tracelytics?</strong><br/>
           Full stack application tracing.<br>Watch your entire environment in one place.
-          <a class="start" title="Start Tracing" href="/signup">start tracing now!</a>
+          <a class="start" title="Start Tracing" href="http://www.tracelytics.com/signup?utm_campaign=pageguide&utm_source=pageguide">start tracing now!</a>
         </div>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </header>
@@ -109,6 +109,18 @@
     <script src="javascripts/scale.fix.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="javascripts/pageguide.js"></script>
+    <script type="text/javascript">
 
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-17096589-7']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
   </body>
 </html>
