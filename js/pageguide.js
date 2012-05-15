@@ -47,8 +47,7 @@ $(function() {
         $('<div/>', { id: 'tlyPageGuideMessages' }).appendTo(guideWrapper);
 
         var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'));
-        var listener = new tl.pg.Listener(guideWrapper, $('#loading'));
-        listener.scheduleCallback();
+        new tl.pg.Listener(guideWrapper, $('#loading')).scheduleCallback();
     }
 });
 
