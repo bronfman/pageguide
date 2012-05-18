@@ -47,8 +47,7 @@ $(function() {
         $('<div/>', { id: 'tlyPageGuideMessages' }).appendTo(guideWrapper);
 
         var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'));
-        var listener = new tl.pg.PageGuideListener(guideWrapper, $('#loading'));
-        listener.scheduleCallback();
+        new tl.pg.Listener(guideWrapper, $('#loading')).scheduleCallback();
     }
 });
 
@@ -263,16 +262,16 @@ tl.pg.PageGuide.prototype.position_tour = function () {
     });
 };
 
-tl.pg.PageGuideListener = function(pgElt, loadingElt) {
+tl.pg.Listener = function(pgElt, loadingElt) {
     this.pgElt = pgElt;
     this.loadingElt = loadingElt;
     this.interval = 250;
     console.log('init pgl');
 };
 
-tl.pg.PageGuideListener.prototype.start = function() {};
+tl.pg.Listener.prototype.start = function() {};
 
-tl.pg.PageGuideListener.prototype.scheduleCallback = function() {
+tl.pg.Listener.prototype.scheduleCallback = function() {
     var that = this;
     var cb = function() {
         that.callback();
@@ -280,7 +279,7 @@ tl.pg.PageGuideListener.prototype.scheduleCallback = function() {
     window.setTimeout(cb, this.interval);
 };
 
-tl.pg.PageGuideListener.prototype.callback = function() {
+tl.pg.Listener.prototype.callback = function() {
     if (!this.loadingElt.is(':visible')) {
         this.pgElt.children(".tlypageguide_toggle").animate({ "right": "-120px" }, 250);
     }
