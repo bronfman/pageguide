@@ -47,7 +47,9 @@ $(function() {
         $('<div/>', { id: 'tlyPageGuideMessages' }).appendTo(guideWrapper);
 
         var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'));
-        new tl.pg.Listener(guideWrapper, $('#loading')).scheduleCallback();
+        pg.ready(function() {
+            pg.$base.children(".tlypageguide_toggle").animate({ "right": "-120px" }, 250);
+        });
     }
 });
 
@@ -80,6 +82,16 @@ tl.pg.isScrolledIntoView = function(elem) {
     return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom - 100));
 };
 
+tl.pg.PageGuide.prototype.ready = function(callback) {
+    var that = this,
+        interval = window.setInterval(function() {
+            if (!$('#loading').is(':visible')) {
+                callback();
+                clearInterval(interval);
+            }
+        }, 250);
+    return this;
+};
 
 /* to be executed on pg expand */
 tl.pg.PageGuide.prototype._on_expand = function () {
@@ -260,30 +272,4 @@ tl.pg.PageGuide.prototype.position_tour = function () {
             arrow.css({ "left": setLeft + "px", "top": setTop + "px" });
         }
     });
-};
-
-tl.pg.Listener = function(pgElt, loadingElt) {
-    this.pgElt = pgElt;
-    this.loadingElt = loadingElt;
-    this.interval = 250;
-    console.log('init pgl');
-};
-
-tl.pg.Listener.prototype.start = function() {};
-
-tl.pg.Listener.prototype.scheduleCallback = function() {
-    var that = this;
-    var cb = function() {
-        that.callback();
-    };
-    window.setTimeout(cb, this.interval);
-};
-
-tl.pg.Listener.prototype.callback = function() {
-    if (!this.loadingElt.is(':visible')) {
-        this.pgElt.children(".tlypageguide_toggle").animate({ "right": "-120px" }, 250);
-    }
-    else {
-        this.scheduleCallback();
-    }
 };
