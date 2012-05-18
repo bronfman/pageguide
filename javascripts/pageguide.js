@@ -22,23 +22,38 @@
 tl = window.tl || {};
 tl.pg = tl.pg || {};
 
-tl.pg.prefs = { 
-    'auto_show_first'   : true,
-    'loading_selector'  : '.pgloading',
-    'track_events_cb'   : null
-};
+tl.pg.default_prefs = { 'auto_show_first': true,
+                        'track_events_cb': null };
 
-$(document).ready(function() {
-    var guideWrapper = tl.pg.ensureDivs();
+$(function() {
+    /* page guide object, for pages that have one */
 
-    if (guideWrapper.length) {
-        new tl.pg.PageGuide(guideWrapper);
-        new tl.pg.Listener(guideWrapper, $(tl.pg.prefs.loading_selector)).scheduleCallback();
+    if ($("#tlyPageGuide").length) {
+        var guide = $("#tlyPageGuide");
+
+        var guideWrapper = $('<div/>', {
+            id: 'tlyPageGuideWrapper'
+        }).appendTo('body');
+
+        $('<div/>', {
+            'title': 'Launch Page Guide',
+            'class': 'tlypageguide_toggle',
+            html: 'page guide<div><span>' + guide.data('tourtitle') +
+                    '</span></div><a href="javascript:void(0);" title="close guide">close guide &raquo;</a>'
+        }).appendTo(guideWrapper);
+
+        guide.appendTo(guideWrapper);
+
+        $('<div/>', { id: 'tlyPageGuideMessages' }).appendTo(guideWrapper);
+
+        var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'));
+        var listener = new tl.pg.PageGuideListener(guideWrapper, $('#loading'));
+        listener.scheduleCallback();
     }
 });
 
-tl.pg.PageGuide = function(pg_elem) {
-    this.preferences = $.extend(tl.pg.prefs, {});
+tl.pg.PageGuide = function (pg_elem, preferences) {
+    this.preferences = $.extend(tl.pg.default_prefs, preferences || {});
     this.$base = pg_elem;
     this.$all_items = $('#tlyPageGuide > li', this.$base);
     this.$items = $([]); /* fill me with visible elements on pg expand */
@@ -54,37 +69,6 @@ tl.pg.PageGuide = function(pg_elem) {
     $(document).ready( function() {
         that._on_ready();
     });
-};
-
-tl.pg.ensureDivs = function() {
-    var guideContent = $("#tlyPageGuide"),
-        guideWrapper = $('#tlyPageGuideWrapper');
-
-
-    /* If guideContent doesn't exist, then this page does not support pageguide.
-     * But if guideWrapper exists, then we've already setup pageguide and we
-     * shouldn't do it again.
-     */
-    if (guideContent.length == 0 || guideWrapper.length == 1) {
-        return $();
-    }
-
-    var guideWrapper = $('<div/>', {
-        id: 'tlyPageGuideWrapper'
-    }).appendTo('body');
-
-    $('<div/>', {
-        'title': 'Launch Page Guide',
-        'class': 'tlypageguide_toggle'
-    }).append('page guide')
-      .append('<div><span>' + guideContent.data('tourtitle') + '</span></div>')
-      .append('<a href="javascript:void(0);" title="close guide">close guide &raquo;</a>')
-    .appendTo(guideWrapper);
-
-    guideWrapper.append(guideContent);
-    guideWrapper.append('<div id="tlyPageGuideMessages"/>');
-      
-    return guideWrapper;
 };
 
 tl.pg.isScrolledIntoView = function(elem) {
@@ -279,16 +263,16 @@ tl.pg.PageGuide.prototype.position_tour = function () {
     });
 };
 
-tl.pg.Listener = function(pgElt, loadingElt) {
+tl.pg.PageGuideListener = function(pgElt, loadingElt) {
     this.pgElt = pgElt;
     this.loadingElt = loadingElt;
     this.interval = 250;
     console.log('init pgl');
 };
 
-tl.pg.Listener.prototype.start = function() {};
+tl.pg.PageGuideListener.prototype.start = function() {};
 
-tl.pg.Listener.prototype.scheduleCallback = function() {
+tl.pg.PageGuideListener.prototype.scheduleCallback = function() {
     var that = this;
     var cb = function() {
         that.callback();
@@ -296,7 +280,7 @@ tl.pg.Listener.prototype.scheduleCallback = function() {
     window.setTimeout(cb, this.interval);
 };
 
-tl.pg.Listener.prototype.callback = function() {
+tl.pg.PageGuideListener.prototype.callback = function() {
     if (!this.loadingElt.is(':visible')) {
         this.pgElt.children(".tlypageguide_toggle").animate({ "right": "-120px" }, 250);
     }
