@@ -153,7 +153,6 @@ tl.pg.PageGuide.prototype._on_expand = function () {
         that.show_message(this);
     };
 
-    this.$items.off('click', item_click_handle);
     this.$items.on('click', item_click_handle);
 
     /* decide to show first? */
