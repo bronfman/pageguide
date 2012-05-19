@@ -212,18 +212,14 @@ tl.pg.PageGuide.prototype._on_ready = function () {
 };
 
 tl.pg.PageGuide.prototype.show_message = function (item, left) {
-    /* TODO make this a jquery template */
-    var h = '<a href="#" class="tlypageguide_close" title="Close Guide">close</a><span>' +
-        $(item).children("ins").html() +
-        '</span><div>' +
-        $(item).children("div").html() +
-        '</div>';
-    h += '<a href="#" class="tlypageguide_back" title="Next">Previous</a>';
-    h += '<a href="#" class="tlypageguide_fwd" title="Next">Next</a>';
-    this.$message.html(h);
+    this.$message.empty()
+      .append('<a href="#" class="tlypageguide_close" title="Close Guide">close</a>')
+      .append('<span>' + $(item).children('ins').html() + '</span>')
+      .append('<div>' + $(item).children('div').html() + '</div>')
+      .append('<a href="#" class="tlypageguide_back" title="Next">Previous</a>')
+      .append('<a href="#" class="tlypageguide_fwd" title="Next">Next</a>');
 
     this.$items.removeClass("tlypageguide-active");
-
     $(item).addClass("tlypageguide-active");
 
     if (!tl.pg.isScrolledIntoView($(item))) {
