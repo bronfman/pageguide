@@ -252,21 +252,32 @@ tl.pg.PageGuide.prototype.roll_number = function (num_wrapper, left) {
 
 tl.pg.PageGuide.prototype.position_tour = function () {
     /* set PG element positions for visible tourtargets */
-    this.$items = this.$all_items.filter(function () { return $($(this).data('tourtarget')).is(':visible'); });
-    this.$items.each(function(i) {
-        var tour_target = $(this).data('tourtarget');
-        var $p = $(tour_target + ":visible:first");
+    this.$items = this.$all_items.filter(function () {
+        return $($(this).data('tourtarget')).is(':visible');
+    });
+
+    this.$items.each(function() {
+        var $p = $($(this).data('tourtarget')).filter(':visible:first')
         if ($p.length) {
-            var arrow = $(this);
-            var position = $p.offset();
+            var arrow = $(this),
+                setLeft = $p.offset().left,
+                setTop  = $p.offset().top;
 
-            var setLeft = position.left + 5;
-            var setTop = position.top + 5;
+            if (arrow.hasClass("tlypageguide_top")) {
+                setTop -= 60;
+            } else if (arrow.hasClass("tlypageguide_bottom")) {
+                setTop += $p.outerHeight() + 15;
+            } else {
+                setTop += 5;
+            }
 
-            if (arrow.hasClass("tlypageguide_bottom")) { setTop = position.top + $p.outerHeight() + 15; }
-            if (arrow.hasClass("tlypageguide_left")) { setLeft = position.left - 65; }
-            if (arrow.hasClass("tlypageguide_top")) { setTop = position.top - 60; }
-            if (arrow.hasClass("tlypageguide_right")) { setLeft = position.left + $p.outerWidth(false) + 15; }
+            if (arrow.hasClass("tlypageguide_right")) {
+                setLeft += $p.outerWidth(false) + 15;
+            } else if (arrow.hasClass("tlypageguide_left")) {
+                setLeft -= 65;
+            } else {
+                setLeft += 5;
+            }
 
             arrow.css({ "left": setLeft + "px", "top": setTop + "px" });
         }
