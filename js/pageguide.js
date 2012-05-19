@@ -73,13 +73,12 @@ tl.pg.PageGuide = function (pg_elem, preferences) {
 };
 
 tl.pg.isScrolledIntoView = function(elem) {
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
+    var dvtop = $(window).scrollTop(),
+        dvbtm = dvtop + $(window).height(),
+        eltop = $(elem).offset().top,
+        elbtm = eltop + $(elem).height();
 
-    var elemTop = $(elem).offset().top;
-    var elemBottom = elemTop + $(elem).height();
-
-    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom - 100));
+    return (elbtm >= dvtop) && (eltop <= dvbtm - 100);
 };
 
 tl.pg.PageGuide.prototype.ready = function(callback) {
