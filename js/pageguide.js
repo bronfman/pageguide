@@ -29,22 +29,23 @@ $(function() {
     /* page guide object, for pages that have one */
 
     if ($("#tlyPageGuide").length) {
-        var guide = $("#tlyPageGuide");
-
-        var guideWrapper = $('<div/>', {
-            id: 'tlyPageGuideWrapper'
-        }).appendTo('body');
+        var guide   = $("#tlyPageGuide"),
+            wrapper = $('<div>', { id: 'tlyPageGuideWrapper' });
 
         $('<div/>', {
             'title': 'Launch Page Guide',
             'class': 'tlypageguide_toggle',
-            html: 'page guide<div><span>' + guide.data('tourtitle') +
-                    '</span></div><a href="javascript:void(0);" title="close guide">close guide &raquo;</a>'
-        }).appendTo(guideWrapper);
+        }).append('page guide')
+          .append('<div><span>' + guide.data('tourtitle') + '</span></div>')
+          .append('<a>', {
+            'href' : 'javascript:void(0);',
+            'title' : 'close guide'
+            'html' : 'close guide &raquo;'
+          }).appendTo(wrapper);
 
-        guide.appendTo(guideWrapper);
-
-        $('<div/>', { id: 'tlyPageGuideMessages' }).appendTo(guideWrapper);
+        wrapper.append(guide);
+        wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }))
+        $('body').append(wrapper);
 
         var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'));
         pg.ready(function() {
