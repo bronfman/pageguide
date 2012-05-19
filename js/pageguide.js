@@ -198,7 +198,10 @@ tl.pg.PageGuide.prototype._on_ready = function () {
     });
     this.$back.live('click', function() {
         that.track_event('PG.back');
-        /* it is too bad that mod is not implemented correctly in js */
+        /*
+         * If -n < x < 0, then the result of x % n will be x, which is
+         * negative. To get a positive remainder, compute (x + n) % n.
+         */
         that.cur_idx = (that.cur_idx + that.$items.length - 1) % that.$items.length;
         that.show_message(that.$items[that.cur_idx], true);
         return false;
