@@ -55,7 +55,7 @@ $(function() {
 });
 
 tl.pg.PageGuide = function (pg_elem, preferences) {
-    this.preferences = $.extend(tl.pg.default_prefs, preferences || {});
+    this.preferences = $.extend({}, tl.pg.default_prefs, preferences);
     this.$base = pg_elem;
     this.$all_items = $('#tlyPageGuide > li', this.$base);
     this.$items = $([]); /* fill me with visible elements on pg expand */
