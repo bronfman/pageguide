@@ -5,8 +5,9 @@ An interactive guide for web page elements using jQuery and CSS3.
 
 ## How-to:
 1. Add references in your code to pageguide.js, jQuery & pageguide.css
-2. Add a simple `<ul>` to the bottom of the pages you want the pageguide to appear on.
-3. Customize the page guide tour title.
+2. Add a document ready callback to setup the page guide
+3. Add a simple `<ul>` to the bottom of the pages you want the pageguide to appear on.
+4. Customize the page guide tour title.
 
 ## An example:
 
@@ -22,10 +23,18 @@ Add `<link rel="stylesheet" href="stylesheets/pageguide.css">` to the header of 
 
 We provide a css file as well as a minified version. Alternatively, we use <a href="http://lesscss.org/" target="_blank">LESS CSS</a> at Tracelytics, so we provide that as well. 
 
-### Step 3 - Choose the elements that you want included in the page guide.
+### Step 3 - Add setup code
+
+Add the following block of JavaScript to your html document:
+
+```$(document).ready(function() {
+    tl.pg.init({ /* optional preferences go here */ });
+});```
+
+### Step 4 - Choose the elements that you want included in the page guide.
 pageguide.js matches the first occurrence of the selector you specify in the `<ul>` you put on your pages in the next step.
 
-### Step 4 - Add the pageguide.js `<ul>` near the bottom of your pages.
+### Step 5 - Add the pageguide.js `<ul>` near the bottom of your pages.
 
     <ul id="tlyPageGuide" data-tourtitle="REPLACE THIS WITH A TITLE">
       <li class="tlypageguide_left" data-tourtarget=".first_element_to_target">
