@@ -269,29 +269,27 @@ tl.pg.PageGuide.prototype.position_tour = function () {
     });
 
     this.$items.each(function() {
-        var $p = $($(this).data('tourtarget')).filter(':visible:first')
-        if ($p.length) {
-            var arrow = $(this),
-                setLeft = $p.offset().left,
-                setTop  = $p.offset().top;
+        var arrow   = $(this),
+            target  = $(arrow.data('tourtarget')).filter(':visible:first')
+            setLeft = target.offset().left,
+            setTop  = target.offset().top;
 
-            if (arrow.hasClass("tlypageguide_top")) {
-                setTop -= 60;
-            } else if (arrow.hasClass("tlypageguide_bottom")) {
-                setTop += $p.outerHeight() + 15;
-            } else {
-                setTop += 5;
-            }
-
-            if (arrow.hasClass("tlypageguide_right")) {
-                setLeft += $p.outerWidth(false) + 15;
-            } else if (arrow.hasClass("tlypageguide_left")) {
-                setLeft -= 65;
-            } else {
-                setLeft += 5;
-            }
-
-            arrow.css({ "left": setLeft + "px", "top": setTop + "px" });
+        if (arrow.hasClass("tlypageguide_top")) {
+            setTop -= 60;
+        } else if (arrow.hasClass("tlypageguide_bottom")) {
+            setTop += target.outerHeight() + 15;
+        } else {
+            setTop += 5;
         }
+
+        if (arrow.hasClass("tlypageguide_right")) {
+            setLeft += target.outerWidth(false) + 15;
+        } else if (arrow.hasClass("tlypageguide_left")) {
+            setLeft -= 65;
+        } else {
+            setLeft += 5;
+        }
+
+        arrow.css({ "left": setLeft + "px", "top": setTop + "px" });
     });
 };
