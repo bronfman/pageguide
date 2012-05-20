@@ -25,34 +25,37 @@ tl.pg = tl.pg || {};
 tl.pg.default_prefs = { 'auto_show_first': true,
                         'track_events_cb': null };
 
-$(function() {
+tl.pg.init = function(preferences) {
     /* page guide object, for pages that have one */
-
-    if ($("#tlyPageGuide").length) {
-        var guide   = $("#tlyPageGuide"),
-            wrapper = $('<div>', { id: 'tlyPageGuideWrapper' });
-
-        $('<div/>', {
-            'title': 'Launch Page Guide',
-            'class': 'tlypageguide_toggle',
-        }).append('page guide')
-          .append('<div><span>' + guide.data('tourtitle') + '</span></div>')
-          .append('<a>', {
-            'href' : 'javascript:void(0);',
-            'title' : 'close guide',
-            'html' : 'close guide &raquo;'
-          }).appendTo(wrapper);
-
-        wrapper.append(guide);
-        wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }))
-        $('body').append(wrapper);
-
-        var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'));
-        pg.ready(function() {
-            pg.$base.children(".tlypageguide_toggle").animate({ "right": "-120px" }, 250);
-        });
+    if ($("#tlyPageGuide").length == 0) {
+        return
     }
-});
+
+    var guide   = $("#tlyPageGuide"),
+        wrapper = $('<div>', { id: 'tlyPageGuideWrapper' });
+
+    $('<div/>', {
+        'title': 'Launch Page Guide',
+        'class': 'tlypageguide_toggle',
+    }).append('page guide')
+      .append('<div><span>' + guide.data('tourtitle') + '</span></div>')
+      .append('<a>', {
+        'href' : 'javascript:void(0);',
+        'title' : 'close guide',
+        'html' : 'close guide &raquo;'
+      }).appendTo(wrapper);
+
+    wrapper.append(guide);
+    wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }))
+    $('body').append(wrapper);
+
+    var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'), preferences);
+    pg.ready(function() {
+        pg.setup_handlers();
+        pg.$base.children(".tlypageguide_toggle").animate({ "right": "-120px" }, 250);
+    });
+    return pg;
+};
 
 tl.pg.PageGuide = function (pg_elem, preferences) {
     this.preferences = $.extend({}, tl.pg.default_prefs, preferences);
@@ -64,12 +67,6 @@ tl.pg.PageGuide = function (pg_elem, preferences) {
     this.$back = $('a.tlypageguide_back', this.$base);
     this.cur_idx = 0;
     this.track_event = this.preferences.track_events_cb || function (_) { return; };
-
-    /* set up deferred init */
-    var that = this;
-    $(document).ready( function() {
-        that._on_ready();
-    });
 };
 
 tl.pg.isScrolledIntoView = function(elem) {
@@ -181,7 +178,7 @@ tl.pg.PageGuide.prototype.close = function() {
     $('body').removeClass('tlypageguide-open');
 };
 
-tl.pg.PageGuide.prototype._on_ready = function () {
+tl.pg.PageGuide.prototype.setup_handlers = function () {
     var that = this;
 
     /* interaction: open/close PG interface */
