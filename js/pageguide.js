@@ -167,12 +167,11 @@ tl.pg.PageGuide.prototype._on_ready = function () {
 
     /* interaction: open/close PG interface */
     $('.tlypageguide_toggle, #tlyPageGuideMessages .tlypageguide_close', this.$base).live('click', function() {
-        var $message = $("#tlyPageGuideMessages");
         if (that.open) {
             that.track_event('PG.close');
             that.$items.toggleClass('expanded');
 
-            $message.animate({ height: "0" }, 500, function() {
+            that.$message.animate({ height: "0" }, 500, function() {
                 $(this).hide();
             });
             /* clear number tags and shading elements */
@@ -235,10 +234,10 @@ tl.pg.PageGuide.prototype.show_message = function (new_index, left) {
     }
 
     if (this.$message.is(":visible")) {
-        this.roll_number($("#tlyPageGuideMessages span"), $(new_item).children('ins').html(), left);
+        this.roll_number($('span', this.$message), $(new_item).children('ins').html(), left);
     }
     else {
-        $('#tlyPageGuideMessages span').html($(new_item).children('ins').html())
+        $('span', this.$message).html($(new_item).children('ins').html())
         this.$message.show().animate({ height: "100px" }, 500);
     }
 };
