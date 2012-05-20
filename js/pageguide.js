@@ -142,16 +142,6 @@ tl.pg.PageGuide.prototype._on_expand = function () {
         sh.cssText = ie;
     }
 
-    /* interaction: click PG element */
-    var item_click_handle = function () {
-        var new_index = $(this).data('idx');
-
-        that.track_event('PG.specific_elt');
-        that.show_message(new_index);
-    };
-
-    this.$items.on('click', item_click_handle);
-
     /* decide to show first? */
     if (this.preferences.auto_show_first && this.$items.length > 0) {
         this.show_message(0);
@@ -196,6 +186,14 @@ tl.pg.PageGuide.prototype.setup_handlers = function () {
         return false;
     });
 
+    /* interaction: item click */
+    this.$all_items.live('click', function() {
+        var new_index = $(this).data('idx');
+
+        that.track_event('PG.specific_elt');
+        that.show_message(new_index);
+    });
+
     /* interaction: fwd/back click */
     this.$fwd.live('click', function() {
         var new_index = (that.cur_idx + 1) % that.$items.length;
@@ -204,6 +202,7 @@ tl.pg.PageGuide.prototype.setup_handlers = function () {
         that.show_message(new_index);
         return false;
     });
+
     this.$back.live('click', function() {
         /*
          * If -n < x < 0, then the result of x % n will be x, which is
