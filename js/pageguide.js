@@ -63,7 +63,6 @@ tl.pg.PageGuide = function (pg_elem, preferences) {
     this.$fwd = $('a.tlypageguide_fwd', this.$base);
     this.$back = $('a.tlypageguide_back', this.$base);
     this.cur_idx = 0;
-    this.open = false;
     this.track_event = this.preferences.track_events_cb || function (_) { return; };
 
     /* set up deferred init */
@@ -162,30 +161,41 @@ tl.pg.PageGuide.prototype._on_expand = function () {
     }
 };
 
+tl.pg.PageGuide.prototype.open = function() {
+    this.track_event('PG.open');
+
+    this._on_expand();
+    this.$items.toggleClass('expanded');
+    $('body').addClass('tlypageguide-open');
+};
+
+tl.pg.PageGuide.prototype.close = function() {
+    this.track_event('PG.close');
+
+    this.$items.toggleClass('expanded');
+    this.$message.animate({ height: "0" }, 500, function() {
+        $(this).hide();
+    });
+    /* clear number tags and shading elements */
+    $('ins').remove();
+    $('body').removeClass('tlypageguide-open');
+};
+
 tl.pg.PageGuide.prototype._on_ready = function () {
     var that = this;
 
     /* interaction: open/close PG interface */
-    $('.tlypageguide_toggle, #tlyPageGuideMessages .tlypageguide_close', this.$base).live('click', function() {
-        if (that.open) {
-            that.track_event('PG.close');
-            that.$items.toggleClass('expanded');
-
-            that.$message.animate({ height: "0" }, 500, function() {
-                $(this).hide();
-            });
-            /* clear number tags and shading elements */
-            $('ins').remove();
-            $('body').removeClass('tlypageguide-open');
+    $('.tlypageguide_toggle', this.$base).live('click', function() {
+        if ($('body').is('.tlypageguide-open')) {
+            that.close();
+        } else {
+            that.open();
         }
-        else {
-            that.track_event('PG.open');
-            that._on_expand();
-            that.$items.toggleClass('expanded');
-            $('body').addClass('tlypageguide-open');
-        }
+        return false;
+    });
 
-        that.open = !that.open;
+    $('.tlypageguide_close', this.$message).live('click', function() {
+        that.close();
         return false;
     });
 
