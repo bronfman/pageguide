@@ -29,22 +29,23 @@ $(function() {
     /* page guide object, for pages that have one */
 
     if ($("#tlyPageGuide").length) {
-        var guide = $("#tlyPageGuide");
-
-        var guideWrapper = $('<div/>', {
-            id: 'tlyPageGuideWrapper'
-        }).appendTo('body');
+        var guide   = $("#tlyPageGuide"),
+            wrapper = $('<div>', { id: 'tlyPageGuideWrapper' });
 
         $('<div/>', {
             'title': 'Launch Page Guide',
             'class': 'tlypageguide_toggle',
-            html: 'page guide<div><span>' + guide.data('tourtitle') +
-                    '</span></div><a href="javascript:void(0);" title="close guide">close guide &raquo;</a>'
-        }).appendTo(guideWrapper);
+        }).append('page guide')
+          .append('<div><span>' + guide.data('tourtitle') + '</span></div>')
+          .append('<a>', {
+            'href' : 'javascript:void(0);',
+            'title' : 'close guide',
+            'html' : 'close guide &raquo;'
+          }).appendTo(wrapper);
 
-        guide.appendTo(guideWrapper);
-
-        $('<div/>', { id: 'tlyPageGuideMessages' }).appendTo(guideWrapper);
+        wrapper.append(guide);
+        wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }))
+        $('body').append(wrapper);
 
         var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'));
         pg.ready(function() {
@@ -73,13 +74,12 @@ tl.pg.PageGuide = function (pg_elem, preferences) {
 };
 
 tl.pg.isScrolledIntoView = function(elem) {
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
+    var dvtop = $(window).scrollTop(),
+        dvbtm = dvtop + $(window).height(),
+        eltop = $(elem).offset().top,
+        elbtm = eltop + $(elem).height();
 
-    var elemTop = $(elem).offset().top;
-    var elemBottom = elemTop + $(elem).height();
-
-    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom - 100));
+    return (elbtm >= dvtop) && (eltop <= dvbtm - 100);
 };
 
 tl.pg.PageGuide.prototype.ready = function(callback) {
@@ -148,17 +148,17 @@ tl.pg.PageGuide.prototype._on_expand = function () {
 
     /* interaction: click PG element */
     var item_click_handle = function () {
+        var new_index = $(this).data('idx');
+
         that.track_event('PG.specific_elt');
-        that.cur_idx = $(this).data('idx');
-        that.show_message(this);
+        that.show_message(new_index);
     };
 
-    this.$items.off('click', item_click_handle);
     this.$items.on('click', item_click_handle);
 
     /* decide to show first? */
     if (this.preferences.auto_show_first && this.$items.length > 0) {
-        this.show_message(this.$items[0]);
+        this.show_message(0);
     }
 };
 
@@ -192,16 +192,21 @@ tl.pg.PageGuide.prototype._on_ready = function () {
 
     /* interaction: fwd/back click */
     this.$fwd.live('click', function() {
+        var new_index = (that.cur_idx + 1) % that.$items.length;
+
         that.track_event('PG.fwd');
-        that.cur_idx = (that.cur_idx + 1) % that.$items.length;
-        that.show_message(that.$items[that.cur_idx]);
+        that.show_message(new_index);
         return false;
     });
     this.$back.live('click', function() {
+        /*
+         * If -n < x < 0, then the result of x % n will be x, which is
+         * negative. To get a positive remainder, compute (x + n) % n.
+         */
+        var new_index = (that.cur_idx + that.$items.length - 1) % that.$items.length;
+
         that.track_event('PG.back');
-        /* it is too bad that mod is not implemented correctly in js */
-        that.cur_idx = (that.cur_idx + that.$items.length - 1) % that.$items.length;
-        that.show_message(that.$items[that.cur_idx], true);
+        that.show_message(new_index, true);
         return false;
     });
 
@@ -209,65 +214,82 @@ tl.pg.PageGuide.prototype._on_ready = function () {
     $(window).resize(function() { that.position_tour(); });
 };
 
-tl.pg.PageGuide.prototype.show_message = function (item, left) {
-    /* TODO make this a jquery template */
-    var h = '<a href="#" class="tlypageguide_close" title="Close Guide">close</a><span>' +
-        $(item).children("ins").html() +
-        '</span><div>' +
-        $(item).children("div").html() +
-        '</div>';
-    h += '<a href="#" class="tlypageguide_back" title="Next">Previous</a>';
-    h += '<a href="#" class="tlypageguide_fwd" title="Next">Next</a>';
-    this.$message.html(h);
+tl.pg.PageGuide.prototype.show_message = function (new_index, left) {
+    var old_idx = this.cur_idx,
+        old_item = this.$items[old_idx],
+        new_item = this.$items[new_index];
+
+    this.cur_idx = new_index;
+    this.$message.empty()
+      .append('<a href="#" class="tlypageguide_close" title="Close Guide">close</a>')
+      .append('<span>' + $(old_item).children('ins').html() + '</span>')
+      .append('<div>' + $(new_item).children('div').html() + '</div>')
+      .append('<a href="#" class="tlypageguide_back" title="Next">Previous</a>')
+      .append('<a href="#" class="tlypageguide_fwd" title="Next">Next</a>');
 
     this.$items.removeClass("tlypageguide-active");
+    $(new_item).addClass("tlypageguide-active");
 
-    $(item).addClass("tlypageguide-active");
-
-    if (!tl.pg.isScrolledIntoView($(item))) {
-        $('html,body').animate({scrollTop: $(item).offset().top - 50}, 500);
+    if (!tl.pg.isScrolledIntoView($(new_item))) {
+        $('html,body').animate({scrollTop: $(new_item).offset().top - 50}, 500);
     }
 
     if (this.$message.is(":visible")) {
-        this.roll_number($("#tlyPageGuideMessages span"), left);
+        this.roll_number($("#tlyPageGuideMessages span"), $(new_item).children('ins').html(), left);
     }
     else {
+        $('#tlyPageGuideMessages span').html($(new_item).children('ins').html())
         this.$message.show().animate({ height: "100px" }, 500);
     }
 };
 
-tl.pg.PageGuide.prototype.roll_number = function (num_wrapper, left) {
+tl.pg.PageGuide.prototype.roll_number = function (num_wrapper, new_text, left) {
     if (left) {
         num_wrapper.animate({ 'text-indent': "50px" }, 200, function() {
             $(this).css({ 'text-indent': "-50px" });
-            $(this).animate({ 'text-indent': "0" }, 200);
+            $(this).animate({ 'text-indent': "0" }, 200, function() {
+                num_wrapper.html(new_text);
+            });
         });
     }
     else {
         num_wrapper.animate({ 'text-indent': "-50px" }, 200, function() {
             $(this).css({ 'text-indent': "50px" });
-            $(this).animate({ 'text-indent': "0" }, 200);
+            $(this).animate({ 'text-indent': "0" }, 200, function() {
+                num_wrapper.html(new_text);
+            });
         });
     }
 };
 
 tl.pg.PageGuide.prototype.position_tour = function () {
     /* set PG element positions for visible tourtargets */
-    this.$items = this.$all_items.filter(function () { return $($(this).data('tourtarget')).is(':visible'); });
-    this.$items.each(function(i) {
-        var tour_target = $(this).data('tourtarget');
-        var $p = $(tour_target + ":visible:first");
+    this.$items = this.$all_items.filter(function () {
+        return $($(this).data('tourtarget')).is(':visible');
+    });
+
+    this.$items.each(function() {
+        var $p = $($(this).data('tourtarget')).filter(':visible:first')
         if ($p.length) {
-            var arrow = $(this);
-            var position = $p.offset();
+            var arrow = $(this),
+                setLeft = $p.offset().left,
+                setTop  = $p.offset().top;
 
-            var setLeft = position.left + 5;
-            var setTop = position.top + 5;
+            if (arrow.hasClass("tlypageguide_top")) {
+                setTop -= 60;
+            } else if (arrow.hasClass("tlypageguide_bottom")) {
+                setTop += $p.outerHeight() + 15;
+            } else {
+                setTop += 5;
+            }
 
-            if (arrow.hasClass("tlypageguide_bottom")) { setTop = position.top + $p.outerHeight() + 15; }
-            if (arrow.hasClass("tlypageguide_left")) { setLeft = position.left - 65; }
-            if (arrow.hasClass("tlypageguide_top")) { setTop = position.top - 60; }
-            if (arrow.hasClass("tlypageguide_right")) { setLeft = position.left + $p.outerWidth(false) + 15; }
+            if (arrow.hasClass("tlypageguide_right")) {
+                setLeft += $p.outerWidth(false) + 15;
+            } else if (arrow.hasClass("tlypageguide_left")) {
+                setLeft -= 65;
+            } else {
+                setLeft += 5;
+            }
 
             arrow.css({ "left": setLeft + "px", "top": setTop + "px" });
         }
