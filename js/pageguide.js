@@ -33,7 +33,7 @@ tl.pg.default_prefs = {
 
 tl.pg.init = function(preferences) {
     /* page guide object, for pages that have one */
-    if ($("#tlyPageGuide").length == 0) {
+    if ($("#tlyPageGuide").length === 0) {
         return;
     }
 
@@ -42,17 +42,17 @@ tl.pg.init = function(preferences) {
 
     $('<div/>', {
         'title': 'Launch Page Guide',
-        'class': 'tlypageguide_toggle',
+        'class': 'tlypageguide_toggle'
     }).append('page guide')
       .append('<div><span>' + guide.data('tourtitle') + '</span></div>')
       .append('<a>', {
-        'href' : 'javascript:void(0);',
+        'href' : 'function() { javascript:void(0); }',
         'title' : 'close guide',
         'html' : 'close guide &raquo;'
       }).appendTo(wrapper);
 
     wrapper.append(guide);
-    wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }))
+    wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }));
     $('body').append(wrapper);
 
     var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'), preferences);
@@ -249,28 +249,16 @@ tl.pg.PageGuide.prototype.show_message = function (new_index, left) {
         this.roll_number($('span', this.$message), $(new_item).children('ins').html(), left);
     }
     else {
-        $('span', this.$message).html($(new_item).children('ins').html())
+        $('span', this.$message).html($(new_item).children('ins').html());
         this.$message.show().animate({ height: "100px" }, 500);
     }
 };
 
 tl.pg.PageGuide.prototype.roll_number = function (num_wrapper, new_text, left) {
-    if (left) {
-        num_wrapper.animate({ 'text-indent': "50px" }, 200, function() {
-            $(this).css({ 'text-indent': "-50px" });
-            $(this).animate({ 'text-indent': "0" }, 200, function() {
-                num_wrapper.html(new_text);
-            });
-        });
-    }
-    else {
-        num_wrapper.animate({ 'text-indent': "-50px" }, 200, function() {
-            $(this).css({ 'text-indent': "50px" });
-            $(this).animate({ 'text-indent': "0" }, 200, function() {
-                num_wrapper.html(new_text);
-            });
-        });
-    }
+    num_wrapper.animate({ 'text-indent': (left ? '' : '-') + '50px' }, 'fast', function() {
+        num_wrapper.html(new_text);
+        num_wrapper.css({ 'text-indent': (left ? '-' : '') + '50px' }, 'fast').animate({ 'text-indent': "0" }, 'fast');
+    });
 };
 
 tl.pg.PageGuide.prototype.position_tour = function () {
@@ -281,7 +269,7 @@ tl.pg.PageGuide.prototype.position_tour = function () {
 
     this.$items.each(function() {
         var arrow   = $(this),
-            target  = $(arrow.data('tourtarget')).filter(':visible:first')
+            target  = $(arrow.data('tourtarget')).filter(':visible:first'),
             setLeft = target.offset().left,
             setTop  = target.offset().top;
 
