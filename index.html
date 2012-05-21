@@ -44,7 +44,7 @@
         <div class="big_arrow_right">
           <span>See pageguide.js in action!</span>
         </div>
-        <p>
+        <p class="description">
           pageguide.js is an interactive visual guide to elements on web pages.
           <br>
           Instead of cluttering your interface with static help message, or explanatory text,
@@ -60,17 +60,21 @@
             This too! Click the page guide button!
         </div>
 
-        <p>
+        <h2>
           It's easy to implement and non-invasive:
+        </h2>
+        <ol class="steps">
+          <li>Add references to pageguide.js &amp; pageguide.css</li>
+          <li>Add a simple &lt;ul&gt; to pages you want page guide to appear on</li>
+          <li>
+            Add the following block of code to your page
+            <pre><code>&lt;script type="text/javascript"&gt;<br>    $(document).ready(function() {<br>        tl.pg.init();<br>    })<br>&lt;/script&gt;</code></pre>
+          </li>
+          <li>Profit! (and measure it with built-in interaction tracking hooks).</li>
+        </ol>
+        <p>
+          If you like to learn by example, view the source of this page and check out how we did it!
         </p>
-
-        1. Add references to pageguide.js &amp; pageguide.css<br>
-        2. Add a simple &lt;ul&gt; to pages you want page guide to appear on<br>
-        3. Add the following block of code to your page<br>
-        <pre><code>&lt;script type="text/javascript"&gt;<br>    $(document).ready(function() {<br>        tl.pg.init();<br>    })<br>&lt;/script&gt;</code></pre>
-        4. Profit! (and measure it with built-in interaction tracking hooks).
-
-        If you like to learn by example, view the source of this page and check out how we did it!
         <div class="more_here">
           <span>
             More down here?  Let pageguide.js take care of the scrolling for you.
