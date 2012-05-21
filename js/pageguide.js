@@ -28,7 +28,7 @@ tl.pg.default_prefs = { 'auto_show_first': true,
 tl.pg.init = function(preferences) {
     /* page guide object, for pages that have one */
     if ($("#tlyPageGuide").length == 0) {
-        return
+        return;
     }
 
     var guide   = $("#tlyPageGuide"),
