@@ -8,27 +8,33 @@
  * Contributing Author: Tracelytics Team
  */
 
-/* PageGuide usage:
-
-    Preferences:
-        auto_show_first - Whether or not to focus on the first visible item
-                        immediately on PG open (default true)
-        track_events_cb - Optional callback for tracking user interactions
-                        with pageguide.  Should be a method taking a single
-                        parameter indicating the name of the interaction.
-                        (default none)
-
-*/
+/*
+ * PageGuide usage:
+ *
+ *   Preferences:
+ *     auto_show_first - Whether or not to focus on the first visible item
+ *                       immediately on PG open (default true)
+ *     loading_selector - The CSS selector for the loading element. pageguide
+ *                        will wait until this element is no longer visible
+ *                        starting up.
+ *     track_events_cb - Optional callback for tracking user interactions
+ *                       with pageguide.  Should be a method taking a single
+ *                       parameter indicating the name of the interaction.
+ *                       (default none)
+ */
 tl = window.tl || {};
 tl.pg = tl.pg || {};
 
-tl.pg.default_prefs = { 'auto_show_first': true,
-                        'track_events_cb': null };
+tl.pg.default_prefs = {
+    'auto_show_first': true,
+    'loading_selector' : '#loading',
+    'track_events_cb': function() { return; }
+};
 
 tl.pg.init = function(preferences) {
     /* page guide object, for pages that have one */
     if ($("#tlyPageGuide").length == 0) {
-        return
+        return;
     }
 
     var guide   = $("#tlyPageGuide"),
@@ -66,7 +72,7 @@ tl.pg.PageGuide = function (pg_elem, preferences) {
     this.$fwd = $('a.tlypageguide_fwd', this.$base);
     this.$back = $('a.tlypageguide_back', this.$base);
     this.cur_idx = 0;
-    this.track_event = this.preferences.track_events_cb || function (_) { return; };
+    this.track_event = this.preferences.track_events_cb;
 };
 
 tl.pg.isScrolledIntoView = function(elem) {
@@ -81,7 +87,7 @@ tl.pg.isScrolledIntoView = function(elem) {
 tl.pg.PageGuide.prototype.ready = function(callback) {
     var that = this,
         interval = window.setInterval(function() {
-            if (!$('#loading').is(':visible')) {
+            if (!$(that.preferences.loading_selector).is(':visible')) {
                 callback();
                 clearInterval(interval);
             }
@@ -91,26 +97,26 @@ tl.pg.PageGuide.prototype.ready = function(callback) {
 
 /* to be executed on pg expand */
 tl.pg.PageGuide.prototype._on_expand = function () {
-    var that = this;
+    var that = this,
+        $d = document,
+        $w = window;
 
     /* set up initial state */
     this.position_tour();
     this.cur_idx = 0;
 
-    $.d = document;
-    $.w = window;
     // create a new stylesheet:
-    var ns = $.d.createElement('style');
-    $.d.getElementsByTagName('head')[0].appendChild(ns);
+    var ns = $d.createElement('style');
+    $d.getElementsByTagName('head')[0].appendChild(ns);
 
     // keep Safari happy
-    if (!$.w.createPopup) {
-        ns.appendChild($.d.createTextNode(''));
+    if (!$w.createPopup) {
+        ns.appendChild($d.createTextNode(''));
         ns.setAttribute("type", "text/css");
     }
 
     // get a pointer to the stylesheet you just created
-    var sh = $.d.styleSheets[$.d.styleSheets.length - 1];
+    var sh = $d.styleSheets[$d.styleSheets.length - 1];
 
     // space for IE rule set
     var ie = "";
@@ -124,8 +130,8 @@ tl.pg.PageGuide.prototype._on_expand = function () {
                             $p.outerHeight() + 'px; width: ' + $p.outerWidth(false) + 'px; }';
 
         // modern browsers
-        if (!$.w.createPopup) {
-            var k = $.d.createTextNode(node_text, 0);
+        if (!$w.createPopup) {
+            var k = $d.createTextNode(node_text, 0);
             ns.appendChild(k);
         }
         // for IE
@@ -138,7 +144,7 @@ tl.pg.PageGuide.prototype._on_expand = function () {
     });
 
     // is IE? slam styles in all at once:
-    if ($.w.createPopup) {
+    if ($w.createPopup) {
         sh.cssText = ie;
     }
 
