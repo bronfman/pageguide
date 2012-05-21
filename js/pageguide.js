@@ -125,13 +125,12 @@ tl.pg.PageGuide.prototype._on_expand = function () {
         var node_text = '.tlypageguide_shadow' + i + ':after { height: ' +
                             $p.outerHeight() + 'px; width: ' + $p.outerWidth(false) + 'px; }';
 
-        // modern browsers
         if (!$w.createPopup) {
+            // modern browsers
             var k = $d.createTextNode(node_text, 0);
             ns.appendChild(k);
-        }
-        // for IE
-        else {
+        } else {
+            // for IE
             ie += node_text;
         }
 
@@ -243,8 +242,7 @@ tl.pg.PageGuide.prototype.show_message = function (new_index, left) {
 
     if (this.$message.is(":visible")) {
         this.roll_number($('span', this.$message), $(new_item).children('ins').html(), left);
-    }
-    else {
+    } else {
         $('span', this.$message).html($(new_item).children('ins').html());
         this.$message.show().animate({ height: "100px" }, 500);
     }
