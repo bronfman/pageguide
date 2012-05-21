@@ -45,11 +45,7 @@ tl.pg.init = function(preferences) {
         'class': 'tlypageguide_toggle'
     }).append('page guide')
       .append('<div><span>' + guide.data('tourtitle') + '</span></div>')
-      .append('<a>', {
-        'href' : 'function() { javascript:void(0); }',
-        'title' : 'close guide',
-        'html' : 'close guide &raquo;'
-      }).appendTo(wrapper);
+      .append('<a href="javascript:void(0);" title="close guide">close guide &raquo;</a>').appendTo(wrapper);
 
     wrapper.append(guide);
     wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }));
