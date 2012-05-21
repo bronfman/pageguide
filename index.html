@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/main.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <!-- Step 1: Include stylesheet -->
     <link rel="stylesheet" href="stylesheets/pageguide.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link href="favicon.ico" rel="icon" type="image/x-icon" />
@@ -63,8 +64,13 @@
           It's easy to implement and non-invasive:
         </p>
 
-        <pre><code>1. Add references to pageguide.js &amp; pageguide.css<br>2. Add a simple &lt;ul&gt; to pages you want page guide to appear on<br>3. ?<br>4. Profit! (and measure it with built-in interaction tracking hooks)</code></pre>
+        1. Add references to pageguide.js &amp; pageguide.css<br>
+        2. Add a simple &lt;ul&gt; to pages you want page guide to appear on<br>
+        3. Add the following block of code to your page<br>
+        <pre><code>&lt;script type="text/javascript"&gt;<br>    $(document).ready(function() {<br>        tl.pg.init();<br>    })<br>&lt;/script&gt;</code></pre>
+        4. Profit! (and measure it with built-in interaction tracking hooks).
 
+        If you like to learn by example, view the source of this page and check out how we did it!
         <div class="more_here">
           <span>
             More down here?  Let pageguide.js take care of the scrolling for you.
@@ -80,6 +86,7 @@
       </section>
     </div>
 
+    <!-- Step 2: the ul element where you specify tour targets and content -->
     <ul id="tlyPageGuide" data-tourtitle="The best way to highlight functionality">
         <li class="tlypageguide_left" data-tourtarget=".first_ftw">
           <div>
@@ -108,12 +115,16 @@
 
     <script src="javascripts/scale.fix.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <!-- Step 1: Include JavaScript -->
     <script src="javascripts/pageguide.js"></script>
+    <!-- Step 3: Include initialization code -->
     <script type="text/javascript">
       $(document).ready(function() {
         tl.pg.init();
       });
+    </script>
 
+    <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-17096589-7']);
       _gaq.push(['_trackPageview']);
@@ -123,7 +134,6 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-
     </script>
   </body>
 </html>
