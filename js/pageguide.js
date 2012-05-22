@@ -240,12 +240,8 @@ tl.pg.PageGuide.prototype.show_message = function (new_index, left) {
         $('html,body').animate({scrollTop: $(new_item).offset().top - 50}, 500);
     }
 
-    if (this.$message.is(":visible")) {
-        this.roll_number($('span', this.$message), $(new_item).children('ins').html(), left);
-    } else {
-        $('span', this.$message).html($(new_item).children('ins').html());
-        this.$message.show().animate({ height: "100px" }, 500);
-    }
+    this.$message.not(':visible').show().animate({ 'height': '100px'}, 500);
+    this.roll_number($('span', this.$message), $(new_item).children('ins').html(), left);
 };
 
 tl.pg.PageGuide.prototype.roll_number = function (num_wrapper, new_text, left) {
