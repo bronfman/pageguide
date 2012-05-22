@@ -38,7 +38,14 @@ tl.pg.init = function(preferences) {
     }
 
     var guide   = $("#tlyPageGuide"),
-        wrapper = $('<div>', { id: 'tlyPageGuideWrapper' });
+        wrapper = $('<div>', { id: 'tlyPageGuideWrapper' }),
+        message = $('<div>', { id: 'tlyPageGuideMessages'});
+
+    message.append('<a href="#" class="tlypageguide_close" title="Close Guide">close</a>')
+      .append('<span></span>')
+      .append('<div></div>')
+      .append('<a href="#" class="tlypageguide_back" title="Next">Previous</a>')
+      .append('<a href="#" class="tlypageguide_fwd" title="Next">Next</a>');
 
     $('<div/>', {
         'title': 'Launch Page Guide',
@@ -48,7 +55,7 @@ tl.pg.init = function(preferences) {
       .append('<a href="javascript:void(0);" title="close guide">close guide &raquo;</a>').appendTo(wrapper);
 
     wrapper.append(guide);
-    wrapper.append($('<div>', { 'id' : 'tlyPageGuideMessages' }));
+    wrapper.append(message);
     $('body').append(wrapper);
 
     var pg = new tl.pg.PageGuide($('#tlyPageGuideWrapper'), preferences);
@@ -226,13 +233,8 @@ tl.pg.PageGuide.prototype.show_message = function (new_index, left) {
         new_item = this.$items[new_index];
 
     this.cur_idx = new_index;
-    this.$message.empty()
-      .append('<a href="#" class="tlypageguide_close" title="Close Guide">close</a>')
-      .append('<span>' + $(old_item).children('ins').html() + '</span>')
-      .append('<div>' + $(new_item).children('div').html() + '</div>')
-      .append('<a href="#" class="tlypageguide_back" title="Next">Previous</a>')
-      .append('<a href="#" class="tlypageguide_fwd" title="Next">Next</a>');
 
+    $('div', this.$message).html($(new_item).children('div').html());
     this.$items.removeClass("tlypageguide-active");
     $(new_item).addClass("tlypageguide-active");
 
